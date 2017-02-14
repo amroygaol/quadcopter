@@ -18,11 +18,11 @@ class plant():
     #inialisasi atribut LQR
     def __init__(self):
         
-        self.l = 0 #jarak antara rotor dan pusat massa
+        self.l = 0.17 #(m) jarak antara rotor dan pusat massa
         self.Jr = 0 #?
         self.b = 0 #..?
         self.d = 0        
-        self.m = 0
+        self.m = 0.38 #kg (outdoors)
         self.ux = 0
         self.uy = 0
         
@@ -41,7 +41,7 @@ class plant():
         self.b2 = l/Y_inertia
         self.b3 = 1/Z_inertia
         
-        #deklarasi variabel input U1..U4
+        #deklarasi variabel input U1..U4 s
         self.U1 = 0
         self.U2 = 0
         self.U3 = 0
