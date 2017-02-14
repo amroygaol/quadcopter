@@ -8,7 +8,7 @@ from ardrone_autonomy.msg import Navdata
 
 class ReadData():
     def __init__(self):
-        rospy.init_node('ReadData', anonymous=False)
+ #       rospy.init_node('ReadData', anonymous=False)
         self.subNavdata = rospy.Subscriber('/ardrone/navdata', Navdata, self.ReceiveNavData)
         self.roll = 0
         self.roll_dot = 0
@@ -25,7 +25,7 @@ class ReadData():
         self.altd = 0
         
         self.rotorA = 0 #rad/m
-        self.rotorB = 0 #rad/m
+        self.rotorB = 0 #rad/m tafhsa
         self.rotorC = 0 #rad/m
         self.rotorD = 0 #rad/m
         self.rotorR = 0
@@ -48,6 +48,8 @@ class ReadData():
         self.rotorR = 0
         
         self.altd = navdata.altd
+        
+RD_instance = ReadData()
         
     
 if __name__ == '__main__':
