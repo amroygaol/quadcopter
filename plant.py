@@ -41,7 +41,7 @@ class plant():
         self.b2 = l/Y_inertia
         self.b3 = 1/Z_inertia
         
-        #deklarasi variabel input U1..U4
+        #deklarasi variabel input U1..U4 s
         self.U1 = 0
         self.U2 = 0
         self.U3 = 0
