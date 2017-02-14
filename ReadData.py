@@ -25,7 +25,7 @@ class ReadData():
         self.altd = 0
         
         self.rotorA = 0 #rad/m
-        self.rotorB = 0 #rad/m
+        self.rotorB = 0 #rad/m tafhsa
         self.rotorC = 0 #rad/m
         self.rotorD = 0 #rad/m
         self.rotorR = 0
