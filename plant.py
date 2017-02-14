@@ -9,6 +9,8 @@ import math
 
 import rospy
 
+import ReadData as RD
+
 from ardrone_autonomy.msg import Navdata
 from matplotlib.pyplot import *
 from control.matlab import *
@@ -26,20 +28,23 @@ class plant():
         self.ux = 0
         self.uy = 0
         
-        #variabe data navigasi yang akan di terima
-        self.subNavdata = rospy.Subscriber('/ardrone/navdata', Navdata, self.ReceiveNavData)
+        """
+        Momen inersia Ixx, Iyy, dan Izz dpat dihitung dengan persamaan :
+         
+            Ixx = 2MR^2/5 + 2l^2m
+            Iyy = 2MR^2/5 + 2l^2m
+            Izz = 2MR^2/5 + 4l^2m
+            
+            M = massa
+            R = radius
+        
+        
+        """
         
         #variabel momen inersia dari quadrotor
         self.X_inertia  = 0
         self.Y_inertia = 0
         self.Z_inertia = 0
-        
-        #variabel kecepatan sudut dari masing-masing motor
-        self.rotorA = 0 #rad/m
-        self.rotorB = 0 #rad/m
-        self.rotorC = 0 #rad/m
-        self.rotorD = 0 #rad/m
-        self.rotorR = 0
         
         #deklarasi nilai konstanta a1..a5 dan b1..b3
         self.a1 = (Y_inertiaf - Z_inertia) / X_inertia
@@ -56,20 +61,6 @@ class plant():
         self.U2 = 0
         self.U3 = 0
         self.U4 = 0
-        
-        #deklarasi variabel untuk data navigasi quadrotor
-        self.roll = 0
-        self.roll_dot = 0
-        self.pitch = 0
-        self.pitch_dot = 0
-        self.yaw = 0
-        self.yaw_dot = 0
-        self.X = 0
-        self.X_dot = 0
-        self.Y = 0
-        self.Y_dot = 0
-        self.Z = 0
-        self.Z_dot = 0
         
         #variabel untuk matriks A
         self.a24 = 0
@@ -135,18 +126,6 @@ class plant():
         self.Q_matrix = np.matrix([])
         self.R_matrix = np.matrix([])
         
-        self.altd2 = 2000
-        self.altd = 0
-        
-    #mendapatkan nilai roll, pitch, yaw, dan dot
-    def ReceiveNavData(self,navdata):
-        self.roll = navdata.rotX
-        self.pitch = navdata.rotY
-        self.yaw = navdata.rotZ
-        self.X = navdata.x
-        self.Y = navdata.y
-        self.Z = navdata.z
-        self.altd = navdata.altd
     
     def SetInputSignal(self):
         self.U1 = self.b(self.rotorA**2 + self.rotorB**2 = self.rotorC**2 + self.rotorD**2)
