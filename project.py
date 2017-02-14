@@ -5,12 +5,15 @@ from matplotlib import pyplot as plt
 import rospy 
 import time
 
+
 #import library untuk mengirim command dan menerima data navigasi dari quadcopter
 from geometry_msgs.msg import Twist
 from std_msgs.msg import String 
 from std_msgs.msg import Empty 
 from ardrone_autonomy.msg import Navdata
 from sensor_msgs.msg import Range
+
+from ReadData import * 
 
 #import class status untuk menentukan status ddari quadcopter
 
@@ -57,14 +60,24 @@ if __name__ == '__main__':
         
         while not rospy.is_shutdown():
             uav.SendTakeOff()
-            if  uav.height < 3000:
+            if  uav.height < 1500:
                 uav.SetCommand(0,0,1,0,0,0)
                 i+=1
             else:
                 uav.SetCommand(0,0,0,0,0,0)
             
             print("Height = " + str(uav.height))
-            print("Loop   = " + str(i))        
+    #        print("\n\n\n")
+            print("Rol\t= "+ str(RD_instance.roll))
+            print("Pitch\t= "+ str(RD_instance.pitch))
+            print("Yaw\t= "+ str(RD_instance.yaw))
+            print("X\t= "+ str(RD_instance.X))
+            print("Y\t= "+ str(RD_instance.Y))
+            print("Z\t= "+ str(RD_instance.Z))
+            print("Motor 1\t= "+ str(RD_instance.rotorA))
+            print("Motor 2\t= "+ str(RD_instance.rotorB))
+            print("Motor 3\t= "+ str(RD_instance.rotorC))
+            print("Motor 4\t= "+ str(RD_instance.rotorD))
         
         #rqt_plot
                 
