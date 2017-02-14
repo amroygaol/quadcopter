@@ -13,6 +13,8 @@ from ardrone_autonomy.msg import Navdata
 from matplotlib.pyplot import *
 from control.matlab import *
 
+from ReadData import ReadData
+
 
 class plant():
     #inialisasi atribut LQR
