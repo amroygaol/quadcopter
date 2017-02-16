@@ -2,8 +2,7 @@
 
 import rospy
 
-from std_msgs.msg import String 
-from std_msgs.msg import Empty 
+
 from ardrone_autonomy.msg import Navdata
 
 class ReadData():
@@ -49,7 +48,7 @@ class ReadData():
         
         self.altd = navdata.altd
         
-RD_instance = ReadData()
+navData = ReadData()
         
     
 if __name__ == '__main__':

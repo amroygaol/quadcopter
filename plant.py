@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python 
 """
 Created on Thu Feb  9 10:52:18 2017
 
@@ -7,22 +7,26 @@ Created on Thu Feb  9 10:52:18 2017
 import numpy as np
 import math
 
-import rospy
+import ReadData
+
+#import rospy
 
 from ardrone_autonomy.msg import Navdata
 from matplotlib.pyplot import *
 from control.matlab import *
+
+from ReadData import *
 
 
 class plant():
     #inialisasi atribut LQR
     def __init__(self):
         
-        self.l = 0 #jarak antara rotor dan pusat massa
+        self.l = 0.17 #mjarak antara rotor dan pusat massa
         self.Jr = 0 #?
         self.b = 0 #..?
         self.d = 0        
-        self.m = 0
+        self.m = 0.38
         self.ux = 0
         self.uy = 0
         
@@ -117,25 +121,25 @@ class plant():
         
 
     def SetInputSignal(self):
-        self.U1 = self.b(self.rotorA**2 + self.rotorB**2 = self.rotorC**2 + self.rotorD**2)
-        self.U2 = self.b(-self.rotorB**2 + self.rotorD**2)
-        self.U3 = self.b(self.rotorA**2 - self.rotorC**2)
-        self.U4 = self.d(-self.rotorA**2 + self.rotorB**2 - self.rotorC**2 + self.rotorD**2)
+        self.U1 = self.b(navData.rotorA**2 + navData.rotorB**2 - navData.rotorC**2 + navData.rotorD**2)
+        self.U2 = self.b(-navData.rotorB**2 + navData.rotorD**2)
+        self.U3 = self.b(navData.rotorA**2 - navData.rotorC**2)
+        self.U4 = self.d(-navData.rotorA**2 + navData.rotorB**2 - navData.rotorC**2 + navData.rotorD**2)
+        
+        #SET nilai ux dan uy
+    def SetUxUy(self):
+        self.ux = (math.cos(navData.roll)*math.sin(navData.pitch)*math.cos(navData.yaw) + math.sin(navData.roll)*math.sin(navData.yaw))
+        self.uy = (math.cos(navData.roll)*math.sin(navData.pitch)*math.sin(navData.yaw) - math.sin(navData.roll)*math.cos(navData.yaw))
         
     #method untuk menghitung variabel a24, a42, a64
     def VarMatriks(self):
-        self.a24 = self.yaw*self.a1 + self.a2*self.rotorR
-        self.a42 = self.yaw*self.a3 + self.a4*self.rotorR
-        self.a64 = self.roll_dot*self.a5
-        self.b81 = (math.cos(self.roll)*math.cos(self.pitch))/self.m
+        self.a24 = navData.yaw*self.a1 + self.a2*navData.rotorR
+        self.a42 = navData.yaw*self.a3 + self.a4*navData.rotorR
+        self.a64 = navData.roll_dot*self.a5
+        self.b81 = (math.cos(navData.roll)*math.cos(navData.pitch))/self.m
         self.b101 = self.ux / self.m
         self.b121 = self.uy / self.m
     #method untuk menghitung 
         
         
    # def GetGain_X_EigenVal(self):
-       
-       
-pant = plant()
-
-StateSpace = ss(plant.A_matrix, plant.B_matrix, plant.C_matrix, plant.D_matrix)
