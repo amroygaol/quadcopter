@@ -7,15 +7,17 @@ Created on Thu Feb  9 10:52:18 2017
 import numpy as np
 import math
 
+"""
 import ReadData
-
+from ReadData import *
 #import rospy
 
 from ardrone_autonomy.msg import Navdata
+"""
 from matplotlib.pyplot import *
 from control.matlab import *
 
-from ReadData import *
+
 
 
 class plant():
@@ -31,19 +33,19 @@ class plant():
         self.uy = 0
         
         #variabel momen inersia dari quadrotor
-        self.X_inertia  = 0
-        self.Y_inertia = 0
-        self.Z_inertia = 0
+        self.X_inertia  = 1
+        self.Y_inertia = 1
+        self.Z_inertia = 1
 
         #deklarasi nilai konstanta a1..a5 dan b1..b3
-        self.a1 = (Y_inertiaf - Z_inertia) / X_inertia
-        self.a2 = (-Jr / X_inertia)
-        self.a3 = (Z_inertia - X_inertia) / Y_inertia
-        self.a4 = (Jr/Y_inertia)
-        self.a5 = (X_inertia - Y_inertia) / Z_inertia
-        self.b1 = l/X_inertia
-        self.b2 = l/Y_inertia
-        self.b3 = 1/Z_inertia
+        self.a1 = (self.Y_inertia - self.Z_inertia) / self.X_inertia
+        self.a2 = (-self.Jr / self.X_inertia)
+        self.a3 = (self.Z_inertia - self.X_inertia) / self.Y_inertia
+        self.a4 = (self.Jr/self.Y_inertia)
+        self.a5 = (self.X_inertia -self. Y_inertia) / self.Z_inertia
+        self.b1 = 1 /self.X_inertia
+        self.b2 = 1 /self.Y_inertia
+        self.b3 = 1 /self.Z_inertia
         
         #deklarasi variabel input U1..U4
         self.U1 = 0
@@ -61,11 +63,11 @@ class plant():
         self.b121 = 0
         
         self.A_matrix = np.matrix([ [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                                    [0, 0, 0, a24, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, self.a24, 0, 0, 0, 0, 0, 0, 0, 0],
                                     [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-                                    [0, a42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, self.a42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                     [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-                                    [0, 0, 0, a64, 0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, self.a64, 0, 0, 0, 0, 0, 0, 0, 0],
                                     [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
                                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -74,17 +76,17 @@ class plant():
     
     #imput matriks
         self.B_matrix = np.matrix([[0, 0, 0, 0],
-                                   [0, b1,0, 0],
+                                   [0, self.b1,0, 0],
                                    [0, 0, 0, 0],
-                                   [0, 0,b2, 0],
+                                   [0, 0,self.b2, 0],
                                    [0, 0, 0, 0],
-                                   [0, 0, 0,b3],
+                                   [0, 0, 0,self.b3],
                                    [0, 0, 0, 0],
-                                   [b81, 0, 0, 0],
+                                   [self.b81, 0, 0, 0],
                                    [0, 0, 0, 0],
-                                   [b101,0, 0, 0],
+                                   [self.b101,0, 0, 0],
                                    [0, 0, 0, 0],
-                                   [b121,0, 0, 0]])
+                                   [self.b121,0, 0, 0]])
     
    #output matriks 
                                    
@@ -141,5 +143,7 @@ class plant():
         self.b121 = self.uy / self.m
     #method untuk menghitung 
         
-        
-   # def GetGain_X_EigenVal(self):
+
+
+#instance data dari plant
+LqrVar = plant()

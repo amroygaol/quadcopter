@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python 
 """
 Created on Thu Feb 16 13:27:16 2017
 
@@ -7,10 +7,17 @@ Created on Thu Feb 16 13:27:16 2017
 
 import numpy as np
 import math
+import controlpy
+from scipy import signal
 
-import ReadData
-from ReadData import *
+from plant import *
 
 from matplotlib.pyplot import *
 from control.matlab import *
 
+
+
+gain, X, closedLoopEigVals = controlpy.synthesis.controller_lqr(LqrVar.A_matrix, LqrVar.B_matrix, LqrVar.Q_matrix, LqrVar.R_matrix)
+
+sys = signal.StateSpace(LqrVar.A_matrix, LqrVar.B_matrix, LqrVar.C_matrix, LqrVar.D_matrix)
+t1, y1 = signal.step(sys)
