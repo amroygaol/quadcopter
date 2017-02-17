@@ -14,4 +14,4 @@ from ReadData import *
 from matplotlib.pyplot import *
 from control.matlab import *
 
-macam betul aja bah
+macam betul aja bah, nggak ada perubahan
