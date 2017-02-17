@@ -1,14 +1,14 @@
 #!/usr/bin/env python 
 
-#import rospy
+import rospy
 
 
-#from ardrone_autonomy.msg import Navdata
+from ardrone_autonomy.msg import Navdata
 
 class ReadData():
     def __init__(self):
- #       rospy.init_node('ReadData', anonymous=False)
-#        self.subNavdata = rospy.Subscriber('/ardrone/navdata', Navdata, self.ReceiveNavData)
+        rospy.init_node('ReadData', anonymous=False)
+        self.subNavdata = rospy.Subscriber('/ardrone/navdata', Navdata, self.ReceiveNavData)
         self.roll = 0
         self.roll_dot = 0
         self.pitch = 0

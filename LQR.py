@@ -15,8 +15,6 @@ from plant import *
 from matplotlib.pyplot import *
 from control.matlab import *
 
-<<<<<<< HEAD
-
 
 gain, X, closedLoopEigVals = controlpy.synthesis.controller_lqr(LqrVar.A_matrix, LqrVar.B_matrix, LqrVar.Q_matrix, LqrVar.R_matrix)
 

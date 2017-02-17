@@ -24,28 +24,37 @@ class plant():
     #inialisasi atribut LQR
     def __init__(self):
         
-        self.l = 0.17 #mjarak antara rotor dan pusat massa
-        self.Jr = 0 #?
-        self.b = 0 #..?
-        self.d = 0        
-        self.m = 0.38
+        self.l = 0.1785                     #mjarak antara rotor dan pusat massa
+        self.Jr = 2.20321*10**-5            #kgm^2
+        self.b = 1.27*10**-7                #g/rpm^2 thrust coefficient
+        self.d = 3.19*10**-11               #g/rpm^2 drag  coefficient    
+        self.g = 9.80665                    #m/s**2 gravity
+        self.m = 0.38                       # or 0.428  kg
         self.ux = 0
         self.uy = 0
         
         #variabel momen inersia dari quadrotor
-        self.X_inertia  = 1
-        self.Y_inertia = 1
-        self.Z_inertia = 1
+        self.Ixx = 2.2383*10**-3            #kgm^2
+        self.Iyy = 2.9858*10**-3            #kgm^2
+        self.Izz = 4.8334*10**-3            #kgm^2
 
         #deklarasi nilai konstanta a1..a5 dan b1..b3
-        self.a1 = (self.Y_inertia - self.Z_inertia) / self.X_inertia
-        self.a2 = (-self.Jr / self.X_inertia)
-        self.a3 = (self.Z_inertia - self.X_inertia) / self.Y_inertia
-        self.a4 = (self.Jr/self.Y_inertia)
-        self.a5 = (self.X_inertia -self. Y_inertia) / self.Z_inertia
-        self.b1 = 1 /self.X_inertia
-        self.b2 = 1 /self.Y_inertia
-        self.b3 = 1 /self.Z_inertia
+        self.a1 = 0.8254478845552427
+        #(self.Iyy - self.Izz) / self.Ixx
+        self.a2 = -0.00984322923647411
+        #(-self.Jr / self.Ixx)
+        self.a3 = 0.15465303926842378
+        #(self.Izz - self.Ixx) / self.Iyy
+        self.a4 = 0.004558302644101462
+        #(self.Jr/self.Y_inertia)
+        self.a5 = -0.8691472972067786
+        #(self.Ixx -self. Iyy) / self.Izz
+        self.b1 = 79.74802305321
+        #1 /self.Ixx
+        self.b2 = 36.93052509620557
+        #1 /self.Iyy
+        self.b3 = 59.78297273762476
+        #1 /self.Izz
         
         #deklarasi variabel input U1..U4
         self.U1 = 0
