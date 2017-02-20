@@ -172,3 +172,4 @@ class plant():
 
 #instance data dari plant
 LqrVar = plant()
+
