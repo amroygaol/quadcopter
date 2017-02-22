@@ -1,26 +1,26 @@
 #!/usr/bin/env python 
 
-#import rospy
+import rospy
+import time
 
-
-#from ardrone_autonomy.msg import Navdata
+from ardrone_autonomy.msg import Navdata
 
 class ReadData():
     def __init__(self):
- #       rospy.init_node('ReadData', anonymous=False)
-#        self.subNavdata = rospy.Subscriber('/ardrone/navdata', Navdata, self.ReceiveNavData)
+        rospy.init_node('ReadData', anonymous=False)
+        self.subNavdata = rospy.Subscriber('/ardrone/navdata', Navdata, self.ReceiveNavData)
         self.roll = 0
-        self.roll_dot = 0
+        self.roll_dot = SetDotVar(self.roll)
         self.pitch = 0
-        self.pitch_dot = 0
+        self.pitch_dot = SetDotVar(self.pitch)
         self.yaw = 0
-        self.yaw_dot = 0
+        self.yaw_dot = SetDotVar(self.yaw)
         self.X = 0
-        self.X_dot = 0
+        self.X_dot = SetDotVar(self.X)
         self.Y = 0
-        self.Y_dot = 0
+        self.Y_dot = SetDotVar(self.Y)
         self.Z = 0
-        self.Z_dot = 0
+        self.Z_dot = SetDotVar(self.Z)
         self.altd = 0
         
         self.rotorA = 0 #rad/m
@@ -29,6 +29,10 @@ class ReadData():
         self.rotorD = 0 #rad/m
         self.rotorR = 0
         
+        self.rate = rospy.rate(9)
+        self.sampleTime = 0
+        self.currentTime = self.time.time()
+        self.lastTime = self.currentTime
         
         
         
@@ -48,9 +52,13 @@ class ReadData():
         
         self.altd = navdata.altd
         
-navData = ReadData()
+    def SetDotVar(self, var):
+        return (self.lastTime - self.currentTime) / self.rate
+
         
-"""    
+#navData = ReadData()
+        
+ 
 if __name__ == '__main__':
     try:
         uav = ReadData()
@@ -69,6 +77,4 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException:
         pass
         
-
-"""
 

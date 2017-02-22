@@ -166,9 +166,9 @@ class plant():
         self.b81 = (math.cos(navData.roll)*math.cos(navData.pitch))/self.m
         self.b101 = self.ux / self.m
         self.b121 = self.uy / self.m
-    #method untuk menghitung 
         
-
+    #method untuk menghitung 
+    
 
 #instance data dari plant
 LqrVar = plant()
