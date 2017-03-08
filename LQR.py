@@ -1,21 +1,16 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 """
 Created on Thu Feb 16 13:27:16 2017
 
 @author: SKRIPSI_LQR
 """
 
-import numpy as np
-import math
-import controlpy
-from scipy import signal
 
-from plant import *
+
 from ReadData import *
 
-from matplotlib.pyplot import *
-from control.matlab import *
 
+"""
 x = np.matrix([[navData.roll],
               [navData.roll_dot],
               [navData.pitch],
@@ -41,6 +36,11 @@ u = -Kx
 Xdot = (LqrVar.A_matrix*x) + (LqrVar.B_matrix*u)
 y = (LqrVar.C_matrix*x) + (LqrVar.D_matrix*u)
 
+#sys = ss(LqrVar.A_matrix, LqrVar.B_matrix, LqrVar.C_matrix, LqrVar.D_matrix)
 
+plt.plot(y)
+plt.show()
 
+print(K)
 
+"""
