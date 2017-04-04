@@ -1,4 +1,9 @@
 #!/usr/bin/env python 
+"""
+Created on Thu Feb 16 13:27:16 2017
+
+@author: AMROY_GAOL
+"""
 
 from matplotlib import pyplot as plt
 #import library ros 
@@ -7,7 +12,6 @@ import time
 
 #import library untuk mengirim command dan menerima data navigasi dari quadcopter
 from geometry_msgs.msg import Twist
-from std_msgs.msg import String 
 from std_msgs.msg import Empty 
 from ardrone_autonomy.msg import Navdata
 from sensor_msgs.msg import Range
@@ -26,7 +30,7 @@ class AutonomousFlight():
         self.command = Twist()
         self.subNavdata = rospy.Subscriber('/ardrone/navdata',Navdata,self.ReceiveNavdata)   
         self.state_change_time = rospy.Time.now()    
-        rospy.on_shutdown(self.SendLand)
+        #rospy.on_shutdown(self.SendLand)
         
     def ReceiveNavdata(self,navdata):	
         self.height = navdata.altd
@@ -62,6 +66,7 @@ if __name__ == '__main__':
                 i+=1
             else:
                 uav.SetCommand(0,0,0,0,0,0)
+                #rospy.is_shutdown()
             
             print("Height = " + str(uav.height))
             print("Loop   = " + str(i))        

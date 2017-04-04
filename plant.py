@@ -1,11 +1,11 @@
 #!/usr/bin/env python 
 """
-Created on Thu Feb  9 10:52:18 2017
+Created on Thu Feb 16 13:27:16 2017
 
-@author: SKRIPSI_LQR
+@author: AMROY_GAOL
 """
 
-#import rospy
+import rospy
 import numpy as np
 from ReadData import uav
 
@@ -16,7 +16,7 @@ class Plant():
         self.Jr = 2.20321*10**-5            #kgm^2
         self.b = 1.27*10**-7                #g/rpm^2 thrust coefficient
         self.d = 3.19*10**-11               #g/rpm^2 drag  coefficient    
-        self.g = 9.80665                    #m/s**2 gravity
+        self.g = -9.80665                    #m/s**2 gravity
         self.m = 0.38                       # or 0.428  kg
         
         #variabel momen inersia dari quadrotor
@@ -40,14 +40,7 @@ class Plant():
         self.b2 = 36.93052509620557
         #1 /self.Iyy
         self.b3 = 59.78297273762476
-        #1 /self.Izz
-        
-        #deklarasi variabel input U1..U4
-        self.U1 = 0
-        self.U2 = 0
-        self.U3 = 0
-        self.U4 = 0
-        
+        #1 /self.Izz       
 
         #variabel untuk matriks A
         self.a24 = 0
@@ -68,6 +61,7 @@ class Plant():
         self.a24 = uav.yaw*self.a1 + self.a2*uav.rotorR
         self.a42 = uav.yaw*self.a3 + self.a4*uav.rotorR
         self.a64 = uav.roll_dot*self.a5
+        self.b81 = self.g+(np.cos(uav.roll)*np.cos(uav.pitch))/self.m
         
     def SetMatrix(self):
         self.A = np.matrix([[0, 1, 0, 0, 0, 0, 0, 0],
@@ -116,21 +110,21 @@ class Plant():
                                    [0, 0, 0, 0.0005, 0, 0, 0, 0],
                                    [0, 0, 0, 0, 0.0005, 0, 0, 0],
                                    [0, 0, 0, 0, 0, 0.0005, 0, 0],
-                                   [0, 0, 0, 0, 0, 0, 0.0005, 0],
-                                   [0, 0, 0, 0, 0, 0, 0, 0.0005]])
+                                   [0, 0, 0, 0, 0, 0, 1, 0],
+                                   [0, 0, 0, 0, 0, 0, 0, 1]])
         
         self.R = np.matrix([[0.1, 0, 0, 0],
                                    [0, 0.1, 0, 0],
                                    [0, 0, 0.1, 0],
                                    [0, 0, 0, 0.1]])
                 
-
+"""
     def SetInputSignal(self):
         self.U1 = self.b(uav.rotorA**2 + uav.rotorB**2 - uav.rotorC**2 + uav.rotorD**2)
         self.U2 = self.b(-uav.rotorB**2 + uav.rotorD**2)
         self.U3 = self.b(uav.rotorA**2 - uav.rotorC**2)
         self.U4 = self.d(-uav.rotorA**2 + uav.rotorB**2 - uav.rotorC**2 + uav.rotorD**2)
         
-
+"""
 #instance data dari plant
 matrix = Plant()

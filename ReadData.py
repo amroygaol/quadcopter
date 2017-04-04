@@ -1,28 +1,29 @@
 #!/usr/bin/env python 
+"""
+Created on Thu Feb 16 13:27:16 2017
 
-#import rospy
-#from ardrone_autonomy.msg import Navdata
-#from sensor_msgs.msg import Imu
+@author: AMROY_GAOL
+"""
+
+import rospy
+from ardrone_autonomy.msg import Navdata
+from sensor_msgs.msg import Imu
 
 class ReadData():
     def __init__(self):
-#        rospy.init_node('ReadData', anonymous=False)
-#        self.subNavdata = rospy.Subscriber('/ardrone/navdata', Navdata, self.ReceiveNavData)
-#        self.imuData = rospy.Subscriber('ardrone/imu',Imu, self.GetImuData)
-        self.roll = 0.121
-        self.roll_dot = 0.125
+        #rospy.init_node('ReadData', anonymous=False)
+        self.subNavdata = rospy.Subscriber('/ardrone/navdata', Navdata, self.ReceiveNavData)
+        self.imuData = rospy.Subscriber('ardrone/imu',Imu, self.GetImuData)
+        self.roll = 0
+        self.roll_dot = 0
         self.pitch = 0
-        self.pitch_dot = 0.25
-        self.yaw = 2.2185
-        self.yaw_dot = 0.112
-        self.Z = 200.2
-        self.Z_dot = 12.31
-        
-        self.rotorA = 0 #rad/m
-        self.rotorB = 0 #rad/m tafhsa
-        self.rotorC = 0 #rad/m
-        self.rotorD = 0 #rad/m
-        self.rotorR = 200
+        self.pitch_dot = 0
+        self.yaw = 0
+        self.yaw_dot = 0
+        self.Z = 0
+        self.Z_dot = 0
+    
+        self.rotorR = 2000
                 
         
     def ReceiveNavData(self,navdata):
@@ -48,7 +49,7 @@ class ReadData():
      
 uav = ReadData()
         
-"""    
+"""   
 if __name__ == '__main__':
     try:
         uav = ReadData()
@@ -65,5 +66,5 @@ if __name__ == '__main__':
             print("-------------------")
     except rospy.ROSInterruptException:
         pass
- """       
+"""    
 
